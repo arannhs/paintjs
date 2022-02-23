@@ -4,6 +4,7 @@ const colors = document.getElementsByClassName("jsColor");
 // const colors = document.querySelectorAll(".jsColor"); nodeList로 만들어짐
 const range = document.getElementById("jsRange");
 const mode = document.getElementById("jsMode");
+const saveBtn = document.getElementById("jsSave");
 
 const ININTIAL_COLOR = "#2c2c2c"
 const CANVAS_SIZE = 700;
@@ -11,6 +12,8 @@ const CANVAS_SIZE = 700;
 canvas.width = CANVAS_SIZE;
 canvas.height = CANVAS_SIZE;
 
+ctx.fillStyle = "white";
+ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
 ctx.strokeStyle = ININTIAL_COLOR;
 ctx.fillStyle = ININTIAL_COLOR;
 ctx.lineWidth = 2.5;
@@ -68,13 +71,27 @@ function handleCanvasClick(){
     }
 }
 
+function handleContextMenu(event){
+    event.preventDefault();
+}
+
+function handleSaveClick(){
+    const image = canvas.toDataURL();
+    const link = document.createElement("a");
+    link.href = image;
+    link.download = "PaintJS";
+    link.click();
+}
+
 
 if(canvas){
     canvas.addEventListener("mousemove", onMouseMove);
     canvas.addEventListener("mousedown", startPainting);
     canvas.addEventListener("mouseup", stopPainting);
     canvas.addEventListener("moueleave", stopPainting);
-    canvas.addEventListener("click", handleCanvasClick);
+    canvas.addEventListener("mousedown", handleCanvasClick);
+    canvas.addEventListener("contextmenu", handleContextMenu);
+    
     
 }
 
@@ -86,4 +103,8 @@ if(range){
 
 if(mode){
     mode.addEventListener("click", handleModeClick);
+}
+
+if(saveBtn){
+    saveBtn.addEventListener("click", handleSaveClick);
 }
