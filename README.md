@@ -1,2 +1,3 @@
 # paintjs
-Paining board made with VanillaJS
+Painting board made with VanillaJS
+from nomadcoders
